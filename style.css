@@ -1,8 +1,57 @@
-/* === ALL CUSTOM STYLES HERE === */
+/*
+1 - COMMON
+2 - HEADER
+3 - HOME CORE COMPETENCIES SECTION
+4 - FOOTER
+*/
 
-/* === Header === */
 
-/* === Home Core Competencies Section === */
+/* === COMMON === */
+.swiper-pagination-bullet{
+  width: 7px;
+  height: 7px;
+  background-color: #9747FF;
+  border-radius: 7px;
+  opacity: 1;
+  transition: width .2s ease-in-out, background-color .3s ease-in-out;
+  will-change: transform;
+}
+
+.swiper-pagination-bullet:hover{
+  background-color: #3C0089;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active{
+  width: 17px;
+}
+
+.navigation-arrow{
+ transition: background-color .35s ease-in-out; 
+}
+
+.navigation-arrow:hover,
+.navigation-arrow:focus-visible{
+  background-color: #9747FF;
+}
+
+  
+.navigation-arrow .arrow-right-svg,
+.navigation-arrow .arrow-left-svg {
+  transition: filter 0.35s ease-in-out;
+}
+
+.navigation-arrow:hover .arrow-right-svg,
+.navigation-arrow:focus-visible .arrow-right-svg,
+.navigation-arrow:hover .arrow-left-svg,
+.navigation-arrow:focus-visible .arrow-left-svg
+{
+  filter: brightness(0) invert(1);
+}
+
+/* === HEADER === */
+
+/* === HOME CORE COMPETENCIES SECTION === */
+
 .competencies-links__link {
   transition: border-color 0.35s ease-in-out;
 }
@@ -57,7 +106,8 @@
   color: #ffffff;
 }
 
-/* === Footer === */
+/* === FOOTER === */
+
 .back-to-top__arrow-box .back-to-top__hover-gradient {
   transition: opacity 0.35s ease-in-out;
 }

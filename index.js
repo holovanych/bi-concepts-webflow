@@ -9,7 +9,6 @@ competenciesLinks.forEach((link) => {
   link.setAttribute("href", href);
 });
 
-
 const competenciesLinkTitles = document.querySelectorAll(
   ".competencies-links__title"
 );
@@ -21,6 +20,39 @@ competenciesLinkTitles.forEach((title) => {
   title.innerHTML = removeTagsExceptBr(hiddenTitle.innerHTML);
 });
 
+/* === Home Page - Testimonials Slider === */
+
+const testimonialSwiper = new Swiper(".swiper.testimonials-slider", {
+  loop: true,
+  /*autoplay: {
+    delay: 5000,
+  },*/
+  breakpoints: {
+    320: {
+      slidesPerView: 3,
+      spaceBetween: 10,
+    },
+    768: {
+      slidesPerView: 3,
+      spaceBetween: 10,
+    },
+    980: {
+      slidesPerView: 3,
+      spaceBetween: 10,
+    },
+  },
+
+  navigation: {
+    prevEl: ".testimonials-slider-arrows .navigation-arrow-left",
+    nextEl: ".testimonials-slider-arrows .navigation-arrow-right",
+  },
+
+  pagination: {
+    el: ".testimonials-slider-dots",
+    clickable: true,
+  },
+
+});
 
 /* === COMMON JS FUNCTIONS === */
 
