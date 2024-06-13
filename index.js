@@ -1,3 +1,27 @@
+/* === Home Page - Competencies Section === */
+
+const competenciesLinks = document.querySelectorAll(
+  ".competencies-links__link"
+);
+competenciesLinks.forEach((link) => {
+  const anchor = link.dataset.anchor;
+  const href = link.getAttribute("href") + "#" + anchor;
+  link.setAttribute("href", href);
+});
+
+
+const competenciesLinkTitles = document.querySelectorAll(
+  ".competencies-links__title"
+);
+competenciesLinkTitles.forEach((title) => {
+  const listItem = title.closest(".competencies-links__item");
+  const hiddenTitle = listItem.querySelector(
+    ".competencies-links__hidden-title-with-line-break"
+  );
+  title.innerHTML = removeTagsExceptBr(hiddenTitle.innerHTML);
+});
+
+
 /* === COMMON JS FUNCTIONS === */
 
 // This function removes all HTML tags from the input string except <br> tags.
