@@ -1,3 +1,83 @@
-body{
+body {
   background: yellow;
+}
+
+/* === ALL CUSTOM STYLES HERE === */
+
+/* === Header === */
+
+/* === Home Core Competencies Section === */
+.competencies-links__link {
+  transition: border-color 0.35s ease-in-out;
+}
+
+.competencies-links__link:hover,
+.competencies-links__link:focus {
+  border-color: rgba(151, 71, 255, 0);
+}
+
+.competencies-links__link .competencies-links__gradient {
+  transition: opacity 0.35s ease-in-out;
+}
+
+.competencies-links__link:hover .competencies-links__gradient,
+.competencies-links__link:focus .competencies-links__gradient {
+  opacity: 1;
+}
+
+.competencies-links__link .competencies-links__image {
+  transition: filter 0.35s ease-in-out;
+}
+
+.competencies-links__link:hover .competencies-links__image,
+.competencies-links__link:focus .competencies-links__image {
+  filter: brightness(0) invert(1);
+}
+
+.competencies-links__link .competencies-links__arrow {
+  opacity: 0;
+  transform: translateX(-7px) translateY(7px);
+  transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+}
+
+.competencies-links__link:hover .competencies-links__arrow,
+.competencies-links__link:focus .competencies-links__arrow {
+  opacity: 1;
+  transform: translateX(0px) translateY(0px);
+}
+
+.competencies-links__link .competencies-links__title,
+.competencies-links__link .paragraph__small-text {
+  transition: color 0.35s ease-in-out;
+}
+
+.competencies-links__link:hover .competencies-links__title,
+.competencies-links__link:focus .competencies-links__title {
+  color: #ffffff;
+}
+
+.competencies-links__link:hover .paragraph__small-text,
+.competencies-links__link:focus .paragraph__small-text {
+  color: #ffffff;
+}
+
+/* === Footer === */
+.back-to-top__arrow-box .back-to-top__hover-gradient {
+  transition: opacity 0.35s ease-in-out;
+}
+
+.back-to-top__arrow-box:hover .back-to-top__hover-gradient {
+  opacity: 1;
+}
+
+.back-to-top__arrow-box .back-to-top__arrow {
+  transition: filter 0.35s ease-in-out;
+}
+
+.back-to-top__arrow-box:hover .back-to-top__arrow {
+  filter: brightness(0) invert(1);
+}
+
+.back-to-top .back-to-top__text {
+  user-select: none;
 }
