@@ -5,36 +5,35 @@
 4 - FOOTER
 */
 
-
 /* === COMMON === */
-.swiper-pagination-bullet{
+
+.swiper-pagination-bullet {
   width: 7px;
   height: 7px;
-  background-color: #9747FF;
+  background-color: #9747ff;
   border-radius: 7px;
   opacity: 1;
-  transition: width .2s ease-in-out, background-color .3s ease-in-out;
+  transition: width 0.2s ease-in-out, background-color 0.3s ease-in-out;
   will-change: transform;
 }
 
-.swiper-pagination-bullet:hover{
-  background-color: #3C0089;
+.swiper-pagination-bullet:hover {
+  background-color: #3c0089;
 }
 
-.swiper-pagination-bullet.swiper-pagination-bullet-active{
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
   width: 17px;
 }
 
-.navigation-arrow{
- transition: background-color .35s ease-in-out; 
+.navigation-arrow {
+  transition: background-color 0.35s ease-in-out;
 }
 
 .navigation-arrow:hover,
-.navigation-arrow:focus-visible{
-  background-color: #9747FF;
+.navigation-arrow:focus-visible {
+  background-color: #9747ff;
 }
 
-  
 .navigation-arrow .arrow-right-svg,
 .navigation-arrow .arrow-left-svg {
   transition: filter 0.35s ease-in-out;
@@ -43,12 +42,142 @@
 .navigation-arrow:hover .arrow-right-svg,
 .navigation-arrow:focus-visible .arrow-right-svg,
 .navigation-arrow:hover .arrow-left-svg,
-.navigation-arrow:focus-visible .arrow-left-svg
-{
+.navigation-arrow:focus-visible .arrow-left-svg {
   filter: brightness(0) invert(1);
 }
 
 /* === HEADER === */
+
+@media (min-width: 992px) {  /* DESKTOP STYLES  */
+  .main-header {
+    transition: height 0.35s ease-in-out, background-color 0.35s ease-in-out,
+      transform 0.3s ease-in-out;
+  }
+
+  .main-header .main-logo-svg .cls-3 {
+    transition: fill 0.35s ease-in-out;
+  }
+
+  .main-header.header-scrolled .rl_navbar1_link {
+    transition: color 0.35s ease-in-out;
+  }
+
+  .main-header .rl_navbar1_dropdown-toggle .rl_navbar1_link-text {
+    transition: color 0.25s ease;
+  }
+
+  .main-header .rl_navbar1_dropdown-toggle .rl-dropdown-icon svg path {
+    fill: #ffffff;
+    transition: fill 0.25s ease;
+  }
+
+  .main-header.header-scrolled .rl_navbar_bg {
+    transition: background-color 0.35s ease-in-out;
+  }
+
+  .main-header
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl_navbar1_link-text {
+    color: #050a32;
+  }
+
+  .main-header
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl_navbar1_link-text:hover {
+    color: #7bdaff;
+  }
+
+  .main-header
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl-dropdown-icon
+    svg
+    path {
+    fill: #050a32;
+  }
+
+  .main-header
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl_navbar1_link-text:hover
+    .rl-dropdown-icon
+    svg
+    path {
+    fill: #7bdaff;
+  }
+  .main-header.header-scrolled .rl_navbar1_link {
+    color: #050a32;
+  }
+
+  .main-header.header-scrolled .rl_navbar1_link:hover {
+    color: #7bdaff;
+  }
+
+  .main-header.header-scrolled .rl_navbar_bg {
+    background-color: #050a32;
+  }
+
+  .main-header.header-scrolled .rl_navbar1_dropdown-link {
+    color: #ffffff;
+  }
+
+  .main-header.header-scrolled .rl_navbar1_dropdown-link:hover {
+    color: #7bdaff;
+  }
+
+  .main-header.header-scrolled
+    .rl_navbar1_dropdown-toggle
+    .rl_navbar1_link-text {
+    color: #050a32;
+  }
+
+  .main-header.header-scrolled
+    .rl_navbar1_dropdown-toggle
+    .rl-dropdown-icon
+    svg
+    path {
+    fill: #050a32;
+  }
+
+  .main-header.header-scrolled
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl_navbar1_link-text {
+    color: #ffffff;
+  }
+
+  .main-header.header-scrolled
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl_navbar1_link-text:hover {
+    color: #7bdaff;
+  }
+
+  .main-header.header-scrolled
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl-dropdown-icon
+    svg
+    path {
+    fill: #ffffff;
+  }
+
+  .main-header.header-scrolled
+    .rl_navbar1_dropdown-toggle[aria-expanded="true"]
+    .rl_navbar1_link-text:hover
+    .rl-dropdown-icon
+    svg
+    path {
+    fill: #7bdaff;
+  }
+
+  .main-header.header-scrolled .rl_navbar1_link-text {
+    color: #050a32;
+  }
+
+  .main-header.header-scrolled .rl-dropdown-icon {
+    color: #050a32;
+  }
+
+  .main-header.header-scrolled .main-logo-svg .cls-3 {
+    fill: #050a32;
+  }
+}
 
 /* === HOME CORE COMPETENCIES SECTION === */
 
