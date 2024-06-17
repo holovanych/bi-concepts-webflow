@@ -1,13 +1,15 @@
 /* === Header Events === */
 
 const desktopHeader = document.querySelector(".main-header");
+const desktopHeaderInner = document.querySelector(".main-header-inner");
 let lastScrollTop = 0;
-window.addEventListener("scroll", () => {
+
+function setScrollClassToMenu() {
   const st = document.documentElement.scrollTop;
   if (st > 200) {
-    desktopHeader.classList.add("header-scrolled");
+    desktopHeaderInner.classList.add("header-scrolled");
   } else {
-    desktopHeader.classList.remove("header-scrolled");
+    desktopHeaderInner.classList.remove("header-scrolled");
   }
   if (st > lastScrollTop && st > 500) {
     desktopHeader.classList.add("hide");
@@ -15,9 +17,14 @@ window.addEventListener("scroll", () => {
     desktopHeader.classList.remove("hide");
   }
   lastScrollTop = st <= 0 ? 0 : st;
+  console.log("scroll");
+}
+
+window.addEventListener("scroll", () => {
+  setScrollClassToMenu();
 });
 
-window.scroll();
+setScrollClassToMenu();
 
 const dropdownMenuActiveLinks = [
   ...document.querySelectorAll(".rl_navbar1_dropdown-link.w--current"),
@@ -30,6 +37,40 @@ if (dropdownMenuActiveLinks) {
       dropdownParentLink.classList.add("w--current");
     }, 100);
   });
+}
+
+/* === Section Indicators === */
+
+const pageSectionIndicatorBox = document.querySelector(".page-section-indicator");
+
+if (pageSectionIndicatorBox) {
+  const navLinks = document.querySelectorAll('.indicator-item[href^="#"]');
+  const mainHeaderForIndicators = document.querySelector('.main-header');
+  const indicatorHeaderOffsetHeight = mainHeaderForIndicators ? mainHeaderForIndicators.offsetHeight : 0;
+
+  function setActiveClassForIndicators() {
+    let scrollPosition = window.scrollY + indicatorHeaderOffsetHeight;
+    
+    navLinks.forEach((link) => {
+      const sectionId = link.getAttribute("href");
+      const section = document.querySelector(sectionId);
+
+      if (section) {
+        if (
+          scrollPosition >= section.offsetTop - 10 &&
+          scrollPosition < section.offsetTop + section.offsetHeight - 10
+        ) {
+          navLinks.forEach((link) => {
+            link.classList.remove("w--current");
+          });
+          link.classList.add("w--current");
+        }
+      }
+    });
+  }
+
+  window.addEventListener("scroll", setActiveClassForIndicators);
+  setActiveClassForIndicators();
 }
 
 /* === Home Page - Competencies Section === */
