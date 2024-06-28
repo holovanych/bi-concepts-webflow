@@ -4,6 +4,7 @@
 3 - HEADER
 4 - HOME CORE COMPETENCIES SECTION
 5 - FOOTER
+6 - RICH TEXT RESET
 
 */
 
@@ -125,7 +126,7 @@
   }
 
   .main-header-inner .rl_navbar1_dropdown-toggle .rl-dropdown-icon svg path {
-    fill: #ffffff;
+    fill: #0095F2;
     transition: fill 0.25s ease;
   }
 
@@ -244,7 +245,7 @@
 }
 
 .competencies-links__link:hover,
-.competencies-links__link:focus {
+.competencies-links__link:focus-visible {
   border-color: rgba(151, 71, 255, 0);
 }
 
@@ -253,7 +254,18 @@
 }
 
 .competencies-links__link:hover .competencies-links__gradient,
-.competencies-links__link:focus .competencies-links__gradient {
+.competencies-links__link:focus-visible .competencies-links__gradient {
+  opacity: 1;
+}
+
+.competencies-links__link .competencies-links__info{
+  opacity: 0;
+  color: #FFFFFF;
+  transition: opacity 0.35s ease-in-out;
+}
+
+.competencies-links__link:hover .competencies-links__info,
+.competencies-links__link:focus-visible .competencies-links__info{
   opacity: 1;
 }
 
@@ -262,7 +274,7 @@
 }
 
 .competencies-links__link:hover .competencies-links__image,
-.competencies-links__link:focus .competencies-links__image {
+.competencies-links__link:focus-visible .competencies-links__image {
   filter: brightness(0) invert(1);
 }
 
@@ -273,34 +285,29 @@
 }
 
 .competencies-links__link:hover .competencies-links__arrow,
-.competencies-links__link:focus .competencies-links__arrow {
+.competencies-links__link:focus-visible .competencies-links__arrow {
   opacity: 1;
   transform: translateX(0px) translateY(0px);
 }
 
-.competencies-links__link .competencies-links__title,
-.competencies-links__link .paragraph__small-text {
+.competencies-links__link .competencies-links__title {
   transition: color 0.35s ease-in-out;
 }
 
 .competencies-links__link:hover .competencies-links__title,
-.competencies-links__link:focus .competencies-links__title {
-  color: #ffffff;
-}
-
-.competencies-links__link:hover .paragraph__small-text,
-.competencies-links__link:focus .paragraph__small-text {
+.competencies-links__link:focus-visible .competencies-links__title {
   color: #ffffff;
 }
 
 /* === FOOTER === */
 
-.back-to-top__arrow-box .back-to-top__hover-gradient {
-  transition: opacity 0.35s ease-in-out;
+.back-to-top__arrow-box {
+  transition: background-color 0.35s ease-in-out, border-color 0.35s ease-in-out;
 }
 
-.back-to-top__arrow-box:hover .back-to-top__hover-gradient {
-  opacity: 1;
+.back-to-top__arrow-box:hover {
+  background-color: rgba(255,255,255, 0);
+  border-color: #FFFFFF;
 }
 
 .back-to-top__arrow-box .back-to-top__arrow {
@@ -311,6 +318,82 @@
   filter: brightness(0) invert(1);
 }
 
-.back-to-top .back-to-top__text {
-  user-select: none;
+/* === RICH TEXT RESET === */
+
+.rich-text-reset {
+    font-size: 100%;
+    font-family: inherit;
+    font-weight: normal;
+    line-height: normal;
+    color: inherit;
+    background: none;
+    border: none;
+    box-sizing: border-box;
+}
+
+.rich-text-reset * {
+    all: unset; /* Resets all properties */
+    display: revert; /* Reverts the display property to its default value */
+    box-sizing: border-box; /* Ensures that padding and border are included in the element's total width and height */
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background: none;
+    text-decoration: none;
+    text-align: inherit;
+    vertical-align: baseline;
+    white-space: inherit;
+    list-style: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+.rich-text-reset a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.rich-text-reset img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.rich-text-reset ul,
+.rich-text-reset ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rich-text-reset table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+.rich-text-reset th,
+.rich-text-reset td {
+    padding: 0;
+    border: none;
+}
+
+.rich-text-reset input,
+.rich-text-reset button,
+.rich-text-reset select,
+.rich-text-reset textarea {
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    box-sizing: inherit;
 }

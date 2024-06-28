@@ -41,16 +41,20 @@ if (dropdownMenuActiveLinks) {
 
 /* === Section Indicators === */
 
-const pageSectionIndicatorBox = document.querySelector(".page-section-indicator");
+const pageSectionIndicatorBox = document.querySelector(
+  ".page-section-indicator"
+);
 
 if (pageSectionIndicatorBox) {
   const navLinks = document.querySelectorAll('.indicator-item[href^="#"]');
-  const mainHeaderForIndicators = document.querySelector('.main-header');
-  const indicatorHeaderOffsetHeight = mainHeaderForIndicators ? mainHeaderForIndicators.offsetHeight : 0;
+  const mainHeaderForIndicators = document.querySelector(".main-header");
+  const indicatorHeaderOffsetHeight = mainHeaderForIndicators
+    ? mainHeaderForIndicators.offsetHeight
+    : 0;
 
   function setActiveClassForIndicators() {
     let scrollPosition = window.scrollY + indicatorHeaderOffsetHeight;
-    
+
     navLinks.forEach((link) => {
       const sectionId = link.getAttribute("href");
       const section = document.querySelector(sectionId);
@@ -81,20 +85,22 @@ const competenciesLinks = document.querySelectorAll(
 
 if (competenciesLinks) {
   competenciesLinks.forEach((link) => {
-    const anchor = link.dataset.anchor;
-    const href = link.getAttribute("href") + "#" + anchor;
+    const referenceElement = link.querySelector(
+      ".competencies-links__reference"
+    );
+    const anchor = referenceElement.dataset.anchor;
+    const href = referenceElement.getAttribute("href") + "#" + anchor;
     link.setAttribute("href", href);
+    changeTag(link, "a");
+    referenceElement.remove();
   });
 
   const competenciesLinkTitles = document.querySelectorAll(
     ".competencies-links__title"
   );
   competenciesLinkTitles.forEach((title) => {
-    const listItem = title.closest(".competencies-links__item");
-    const hiddenTitle = listItem.querySelector(
-      ".competencies-links__hidden-title-with-line-break"
-    );
-    title.innerHTML = removeTagsExceptBr(hiddenTitle.innerHTML);
+    title.innerHTML = removeTagsExceptBr(title.innerHTML);
+    changeTag(title, "h3");
   });
 }
 
@@ -154,6 +160,40 @@ if (footerSubMenuActiveLinks) {
   });
 }
 
+const backToTopButton = document.querySelector(".back-to-top__arrow-box");
+if (backToTopButton) {
+  backToTopButton.addEventListener("click", () => {
+    const startPosition = window.scrollY;
+    let startTime = null;
+
+    const scrollToTop = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const scrollY = easeInOutQuad(
+        timeElapsed,
+        startPosition,
+        -startPosition,
+        1000
+      );
+
+      window.scrollTo(0, scrollY);
+
+      if (timeElapsed < 1000) {
+        requestAnimationFrame(scrollToTop);
+      }
+    };
+
+    const easeInOutQuad = (t, b, c, d) => {
+      t /= d / 2;
+      if (t < 1) return (c / 2) * t * t + b;
+      t--;
+      return (-c / 2) * (t * (t - 2) - 1) + b;
+    };
+
+    requestAnimationFrame(scrollToTop);
+  });
+}
+
 /* === COMMON JS FUNCTIONS === */
 
 // This function removes all HTML tags from the input string except <br> tags.
@@ -188,4 +228,22 @@ function removeTagsExceptBr(htmlString) {
 
   result = result.replace(/&[a-zA-Z0-9#]+;/g, "");
   return result;
+}
+
+function changeTag(oldElement, newTagName) {
+  // Create the new element with the desired tag name
+  const newElement = document.createElement(newTagName);
+
+  // Copy attributes from the old element to the new one
+  for (let attr of oldElement.attributes) {
+    newElement.setAttribute(attr.name, attr.value);
+  }
+
+  // Copy children from the old element to the new one
+  while (oldElement.firstChild) {
+    newElement.appendChild(oldElement.firstChild);
+  }
+
+  // Replace the old element with the new one in the DOM
+  oldElement.parentNode.replaceChild(newElement, oldElement);
 }
