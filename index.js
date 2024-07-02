@@ -17,7 +17,6 @@ function setScrollClassToMenu() {
     desktopHeader.classList.remove("hide");
   }
   lastScrollTop = st <= 0 ? 0 : st;
-  console.log("scroll");
 }
 
 window.addEventListener("scroll", () => {
@@ -67,7 +66,9 @@ if (pageSectionIndicatorBox) {
           navLinks.forEach((link) => {
             link.classList.remove("w--current");
           });
+
           link.classList.add("w--current");
+          console.log(scrollPosition, section.offsetTop);
         }
       }
     });
@@ -89,7 +90,8 @@ if (competenciesLinks) {
       ".competencies-links__reference"
     );
     const anchor = referenceElement.dataset.anchor;
-    const href = referenceElement.getAttribute("href") + "#" + anchor;
+    const href =
+      referenceElement.getAttribute("href") + "#" + "service-" + anchor;
     link.setAttribute("href", href);
     changeTag(link, "a");
     referenceElement.remove();
@@ -140,6 +142,75 @@ if (testimonialSlider) {
     },
   });
 }
+
+/* Quote Box Style 1 */
+
+const quoteBoxStyle1 = document.querySelector(".quote-box-style-1__quote");
+if (quoteBoxStyle1) {
+  const lastQuoteParagraph = quoteBoxStyle1.lastElementChild;
+  if (lastQuoteParagraph) {
+    const spanQuoteIcon = document.createElement("span");
+    spanQuoteIcon.className = "inner-quote-icon";
+    spanQuoteIcon.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                               <path d="M2.1799 17.23L0.709902 15.69C1.45657 14.3833 2.1099 13.1 2.6699 11.84C3.2299 10.5333 3.53324 
+                               9.27333 3.5799 8.06L0.149902 7.29V0.5H7.7099V5.4C7.7099 8.24667 7.12657 10.58 5.9599 12.4C4.8399 
+                               14.22 3.5799 15.83 2.1799 17.23ZM12.6799 17.23L11.2099 15.69C11.9566 14.3833 12.6099 13.1 13.1699 
+                               11.84C13.7299 10.5333 14.0332 9.27333 14.0799 8.06L10.6499 7.29V0.5H18.2099V5.4C18.2099 8.24667 
+                               17.6266 10.58 16.4599 12.4C15.3399 14.22 14.0799 15.83 12.6799 17.23Z" fill="#050A32"/>
+                              </svg>`;
+    const wrapSpanQuoteElement = document.createElement("span");
+    wrapSpanQuoteElement.className = "inner-quote-icon-wrap";
+    wrapSpanQuoteElement.appendChild(spanQuoteIcon);
+    lastQuoteParagraph.appendChild(wrapSpanQuoteElement);
+  }
+}
+
+/* Extract and load section (Vertical Scheme) */
+
+function setEqualHeight(selector) {
+  const elements = document.querySelectorAll(selector);
+  let maxHeight = 0;
+
+  elements.forEach(element => {
+      element.style.height = 'auto';
+  });
+
+  elements.forEach(element => {
+      maxHeight = Math.max(maxHeight, element.offsetHeight);
+  });
+
+  elements.forEach(element => {
+      element.style.height = `${maxHeight}px`;
+  });
+}
+
+function setHeightForVerticalScheme() {
+  const minWidth = 992; 
+  if (window.innerWidth >= minWidth) {
+      setEqualHeight('.data-vertical-column__challenge');
+      setEqualHeight('.data-vertical-column__solution');
+      setEqualHeight('.data-vertical-column__result');
+      setEqualHeight('.data-vertical-column__title-wrapper');
+  } else {
+      const elements = document.querySelectorAll('.data-vertical-column__challenge');
+      elements.forEach(element => {
+          element.style.height = 'auto';
+      });
+  }
+}
+
+setHeightForVerticalScheme();
+
+setTimeout(function(){
+  setHeightForVerticalScheme();
+}, 10)
+
+setTimeout(function(){
+  setHeightForVerticalScheme();
+}, 500)
+
+window.addEventListener('resize', setHeightForVerticalScheme);
+
 
 /* Footer */
 
