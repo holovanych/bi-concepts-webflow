@@ -52,6 +52,10 @@
   margin-bottom: 0;
 }
 
+.w-richtext :last-child{
+  margin-bottom: 0;
+}
+
 /* === SECTION INDICATOR === */
 
 .page-section-indicator {
@@ -353,6 +357,62 @@
 .competencies-links__link:hover .competencies-links__title,
 .competencies-links__link:focus-visible .competencies-links__title {
   color: #ffffff;
+}
+
+/* === CREDENTIALS SECTION === */
+
+.credential-item__category-filter{
+  visibility: hidden;
+  opacity: 0;
+}
+
+.credential-item.hidden-item{
+  display: none;
+}
+
+.credential-item__head{
+  user-select: none;
+}
+
+.credential-item__head .credential-item__head-background{
+  transition: opacity .35s ease-in-out;
+}
+
+.credential-item__head:hover .credential-item__head-background{
+  opacity: 0;
+}
+
+.credential-item.opened .credential-item__head-background{
+  opacity: 0;
+}
+
+.credential-item__button{
+  transition: transform .35s ease-in-out;
+}
+
+.credential-item.opened .credential-item__button{
+  transform: rotate(45deg);
+}
+
+.credentials__category-item{
+  transition: background-color .35s ease-in-out;
+}
+
+.credentials__category-item .credentials__category-item-text{
+  transition: color .35s ease-in-out;
+}
+
+.credentials__category-item.active-category {
+  background-color: #050A32;
+}
+
+.credentials__category-item.active-category .credentials__category-item-text{
+  color: #FFFFFF;
+}
+
+
+.credential-item__body{
+  display: none;
 }
 
 /* === FOOTER === */
