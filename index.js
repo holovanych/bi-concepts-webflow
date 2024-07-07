@@ -106,7 +106,7 @@ if (competenciesLinks) {
   });
 }
 
-/* === Home Page - Testimonials Slider === */
+/* === Testimonials Slider === */
 
 const testimonialSlider = document.querySelector(".swiper.testimonials-slider");
 
@@ -141,6 +141,116 @@ if (testimonialSlider) {
       clickable: true,
     },
   });
+}
+
+/* === Horizontal Scheme with Navigation === */
+
+const horizontalScheme = document.querySelector(".home-value__scheme");
+
+if (horizontalScheme) {
+  const schemeWithNavItems = [
+    ...document.querySelectorAll(".scheme-with-nav__item"),
+  ];
+  const schemeWithNavLeft = document.querySelector(
+    ".home-value__scheme-nav .navigation-arrow-left"
+  );
+  const schemeWithNavRight = document.querySelector(
+    ".home-value__scheme-nav .navigation-arrow-right"
+  );
+
+  let currentIndex = 0;
+  schemeWithNavItems[currentIndex].classList.add("active");
+
+  const setActiveItem = (index) => {
+    schemeWithNavItems[currentIndex].classList.remove("active");
+    currentIndex = index;
+    schemeWithNavItems[currentIndex].classList.add("active");
+  };
+
+  schemeWithNavRight.addEventListener("click", () => {
+    setActiveItem((currentIndex + 1) % schemeWithNavItems.length);
+  });
+
+  schemeWithNavLeft.addEventListener("click", () => {
+    setActiveItem(
+      (currentIndex - 1 + schemeWithNavItems.length) % schemeWithNavItems.length
+    );
+  });
+
+  schemeWithNavItems.forEach((item, index) => {
+    item.addEventListener("click", () => {
+      if (index !== currentIndex) {
+        setActiveItem(index);
+      }
+    });
+  });
+}
+
+/* Our Services */
+const ourServices = document.querySelector(".our-services");
+
+if (ourServices) {
+
+  const ourServicesItems = [...document.querySelectorAll(".our-services__item")];
+  const ourServicesItemsContainer = document.querySelector('.our-services__list')
+  const popupList = [...document.querySelectorAll('.our-services__popup-item')];
+
+  const openPopup = (index) => {
+    const containerWidth = ourServicesItemsContainer.clientWidth;
+    const itemWidth = ourServicesItems[0].clientWidth;
+    const numberOfColumns = Math.floor(containerWidth / itemWidth);
+    const rowIndex = Math.floor(index / numberOfColumns) + 1;
+    const insertAfterIndex = rowIndex * numberOfColumns - 1;
+    console.log("Clicked item index:", index);
+    console.log("Number of columns:", numberOfColumns);
+    console.log("Row index:", rowIndex);
+    console.log("After Index:", insertAfterIndex);
+
+    const clonedPopup = popupList[index].cloneNode(true);
+    insertAfter(ourServicesItems[insertAfterIndex], clonedPopup);
+    slideDown(clonedPopup, 400, function(){
+      ourServicesItemsContainer.classList.remove('lock');
+    })
+  };
+  
+  const clearPopup = () => {
+    const activePopup = ourServicesItemsContainer.querySelector('.our-services__popup-item');
+    console.log(activePopup);
+    if(activePopup){
+      slideUp(activePopup, 300, function(){
+        activePopup.remove();
+      });
+    }
+  };
+
+  ourServicesItems.forEach((item, index) => {
+    item.addEventListener("click", function () {
+      if (!item.classList.contains("opened") && !ourServicesItemsContainer.classList.contains('lock')) {
+        ourServicesItemsContainer.classList.add('lock')
+        ourServicesItems.forEach(item => item.classList.remove('opened'));
+        item.classList.add('opened');
+        clearPopup();
+        openPopup(index);
+      } else {
+        item.classList.remove('opened');
+        clearPopup();
+      }
+    });
+  });
+
+
+  document.addEventListener("click", function(e){
+    const closeBTN = e.target.closest(".our-services__popup-close-btn"); // Or any other selector.
+    if(closeBTN){
+      clearPopup();
+    }
+  });
+
+
+
+  function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+  }
 }
 
 /* Quote Box Style 1 */
@@ -218,56 +328,65 @@ if (extractAndLoadScheme) {
 
 /* CREDENTIALS Section */
 
-const credentialsSection = document.querySelector('.credentials');
-if(credentialsSection){
-  // Filter Items 
-  const credentialsCategories = [...document.querySelectorAll('.credentials__category-item')];
-  const allCredentialItems = [...document.querySelectorAll('.credential-item')];
-  
-  function clickOnCredentialCategory(){
-    if(this.classList.contains('active-category')) return;
-    credentialsCategories.forEach((item)=>item.classList.remove('active-category'));
-    this.classList.add('active-category');
-    const clickedCategory = this.querySelector('.credentials__category-item-text').textContent.trim();
-    const filteredItems = allCredentialItems.filter((item)=>{
-      const category = item.querySelector('.credential-item__category-filter').textContent;
-      if(clickedCategory === "All") return true;
-      return category.includes(clickedCategory);
-    })
-    console.log(filteredItems)
-    allCredentialItems.forEach((item)=>item.classList.add('hidden-item'));
-    filteredItems.forEach((item)=>item.classList.remove('hidden-item'));
-  
-  }
-  credentialsCategories.forEach((category)=>{
-    category.addEventListener('click', clickOnCredentialCategory)
-  })
-  // Slide Down Item
-  const allCredentialHeadings = [...document.querySelectorAll('.credential-item__head')];
+const credentialsSection = document.querySelector(".credentials");
+if (credentialsSection) {
+  // Filter Items
+  const credentialsCategories = [
+    ...document.querySelectorAll(".credentials__category-item"),
+  ];
+  const allCredentialItems = [...document.querySelectorAll(".credential-item")];
 
-  function clickOnCredentialHeading(){
-    const currentItem = this.closest('.credential-item');
-    const hiddenBody = currentItem.querySelector('.credential-item__body');
-    if(currentItem.classList.contains('lock')) return;
-    currentItem.classList.add('lock');
-    if(!currentItem.classList.contains('opened')){
-      currentItem.classList.add('opened');
-      slideDown(hiddenBody,400, function (){
-        currentItem.classList.remove('lock');
+  function clickOnCredentialCategory() {
+    if (this.classList.contains("active-category")) return;
+    credentialsCategories.forEach((item) =>
+      item.classList.remove("active-category")
+    );
+    this.classList.add("active-category");
+    const clickedCategory = this.querySelector(
+      ".credentials__category-item-text"
+    ).textContent.trim();
+    const filteredItems = allCredentialItems.filter((item) => {
+      const category = item.querySelector(
+        ".credential-item__category-filter"
+      ).textContent;
+      if (clickedCategory === "All") return true;
+      return category.includes(clickedCategory);
+    });
+    console.log(filteredItems);
+    allCredentialItems.forEach((item) => item.classList.add("hidden-item"));
+    filteredItems.forEach((item) => item.classList.remove("hidden-item"));
+  }
+  credentialsCategories.forEach((category) => {
+    category.addEventListener("click", clickOnCredentialCategory);
+  });
+
+  // Slide Down Item
+  const allCredentialHeadings = [
+    ...document.querySelectorAll(".credential-item__head"),
+  ];
+
+  function clickOnCredentialHeading() {
+    const currentItem = this.closest(".credential-item");
+    const hiddenBody = currentItem.querySelector(".credential-item__body");
+    if (currentItem.classList.contains("lock")) return;
+    currentItem.classList.add("lock");
+    if (!currentItem.classList.contains("opened")) {
+      currentItem.classList.add("opened");
+      slideDown(hiddenBody, 400, function () {
+        currentItem.classList.remove("lock");
       });
     } else {
-      currentItem.classList.remove('opened');
-      slideUp(hiddenBody,400,function (){
-        currentItem.classList.remove('lock');
+      currentItem.classList.remove("opened");
+      slideUp(hiddenBody, 400, function () {
+        currentItem.classList.remove("lock");
       });
     }
   }
 
-  allCredentialHeadings.forEach((heading)=>{
-    heading.addEventListener('click', clickOnCredentialHeading)
-  })
+  allCredentialHeadings.forEach((heading) => {
+    heading.addEventListener("click", clickOnCredentialHeading);
+  });
 }
-
 
 /* Footer */
 
@@ -377,69 +496,69 @@ function changeTag(oldElement, newTagName) {
 }
 
 function slideUp(element, duration = 400, callback) {
-  if (element.dataset.sliding === 'true') return;
+  if (element.dataset.sliding === "true") return;
 
-  element.dataset.sliding = 'true';
-  element.style.height = element.offsetHeight + 'px';
-  element.style.transitionProperty = 'height, margin, padding';
-  element.style.transitionDuration = duration + 'ms';
-  element.style.boxSizing = 'border-box';
+  element.dataset.sliding = "true";
+  element.style.height = element.offsetHeight + "px";
+  element.style.transitionProperty = "height, margin, padding";
+  element.style.transitionDuration = duration + "ms";
+  element.style.boxSizing = "border-box";
   element.offsetHeight; // force reflow
-  element.style.overflow = 'hidden';
+  element.style.overflow = "hidden";
   element.style.height = 0;
   element.style.paddingTop = 0;
   element.style.paddingBottom = 0;
   element.style.marginTop = 0;
   element.style.marginBottom = 0;
 
-  window.setTimeout(function() {
-    element.style.display = 'none';
-    element.style.removeProperty('height');
-    element.style.removeProperty('padding-top');
-    element.style.removeProperty('padding-bottom');
-    element.style.removeProperty('margin-top');
-    element.style.removeProperty('margin-bottom');
-    element.style.removeProperty('overflow');
-    element.style.removeProperty('transition-duration');
-    element.style.removeProperty('transition-property');
-    element.dataset.sliding = 'false';
-    if (typeof callback === 'function') callback();
+  window.setTimeout(function () {
+    element.style.display = "none";
+    element.style.removeProperty("height");
+    element.style.removeProperty("padding-top");
+    element.style.removeProperty("padding-bottom");
+    element.style.removeProperty("margin-top");
+    element.style.removeProperty("margin-bottom");
+    element.style.removeProperty("overflow");
+    element.style.removeProperty("transition-duration");
+    element.style.removeProperty("transition-property");
+    element.dataset.sliding = "false";
+    if (typeof callback === "function") callback();
   }, duration);
 }
 
 function slideDown(element, duration = 400, callback) {
-  if (element.dataset.sliding === 'true') return;
+  if (element.dataset.sliding === "true") return;
 
-  element.dataset.sliding = 'true';
-  element.style.removeProperty('display');
+  element.dataset.sliding = "true";
+  element.style.removeProperty("display");
   let display = window.getComputedStyle(element).display;
 
-  if (display === 'none') display = 'block';
+  if (display === "none") display = "block";
 
   element.style.display = display;
   let height = element.offsetHeight;
-  element.style.overflow = 'hidden';
+  element.style.overflow = "hidden";
   element.style.height = 0;
   element.style.paddingTop = 0;
   element.style.paddingBottom = 0;
   element.style.marginTop = 0;
   element.style.marginBottom = 0;
   element.offsetHeight; // force reflow
-  element.style.transitionProperty = 'height, margin, padding';
-  element.style.transitionDuration = duration + 'ms';
-  element.style.boxSizing = 'border-box';
-  element.style.height = height + 'px';
-  element.style.removeProperty('padding-top');
-  element.style.removeProperty('padding-bottom');
-  element.style.removeProperty('margin-top');
-  element.style.removeProperty('margin-bottom');
+  element.style.transitionProperty = "height, margin, padding";
+  element.style.transitionDuration = duration + "ms";
+  element.style.boxSizing = "border-box";
+  element.style.height = height + "px";
+  element.style.removeProperty("padding-top");
+  element.style.removeProperty("padding-bottom");
+  element.style.removeProperty("margin-top");
+  element.style.removeProperty("margin-bottom");
 
-  window.setTimeout(function() {
-    element.style.removeProperty('height');
-    element.style.removeProperty('overflow');
-    element.style.removeProperty('transition-duration');
-    element.style.removeProperty('transition-property');
-    element.dataset.sliding = 'false';
-    if (typeof callback === 'function') callback();
+  window.setTimeout(function () {
+    element.style.removeProperty("height");
+    element.style.removeProperty("overflow");
+    element.style.removeProperty("transition-duration");
+    element.style.removeProperty("transition-property");
+    element.dataset.sliding = "false";
+    if (typeof callback === "function") callback();
   }, duration);
 }

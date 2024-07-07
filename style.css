@@ -48,10 +48,6 @@
   filter: brightness(0) invert(1);
 }
 
-.rich-text__small-line-height :last-child{
-  margin-bottom: 0;
-}
-
 .w-richtext :last-child{
   margin-bottom: 0;
 }
@@ -159,6 +155,94 @@
 .inner-quote-icon svg{
   width: 100%;
 }
+
+/* === Horizontal Scheme with Navigation === */
+
+.scheme-with-nav__item:nth-of-type(1) {
+  background: linear-gradient(156.353deg, #A88BFA 0%, #6E50D2 100%);
+}
+
+.scheme-with-nav__item:nth-of-type(2) {
+  background: linear-gradient(156.353deg, #6E50D2 0%, #463296 100%);
+}
+
+.scheme-with-nav__item:nth-of-type(3) {
+  background: linear-gradient(156.353deg, #463296 0%, #050A32 100%);
+}
+
+.scheme-with-nav__item .scheme-with-nav__tag-wrapper,
+.scheme-with-nav__item .scheme-with-nav__text-wrapper{
+  opacity: 0;
+  transition: opacity .25s ease;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: perspective(1000px);
+}
+
+.scheme-with-nav__item{
+  width: 28%;
+  flex-shrink: 0;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: perspective(1000px);
+}
+
+.scheme-with-nav__item.active{
+  flex-shrink: 0;
+  width: 44%;
+}
+
+.scheme-with-nav__item{
+  transition: width .3s ease;
+  user-select: none;
+}
+
+.scheme-with-nav__item.active .scheme-with-nav__tag-wrapper,
+.scheme-with-nav__item.active .scheme-with-nav__text-wrapper{
+  opacity: 1;
+  transition: opacity .25s ease .3s;
+}
+
+.scheme-with-nav {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: perspective(1000px);
+}
+
+.scheme-logo-column{
+  user-select: none;
+}
+
+
+/* Our Services */
+.our-services__item {
+  user-select: none;
+}
+
+.our-services__item .our-services__gradient{
+  transition: opacity .35s ease-in-out;
+}
+
+.our-services__item:hover .our-services__gradient,
+.our-services__item:focus-visible .our-services__gradient{
+  opacity: 1;
+}
+
+.our-services__item.opened .our-services__gradient{
+  opacity: 1;
+}
+
+.our-services__popup-item{
+  display: none;
+}
+
+.our-services__popup-close-btn .our-services__popup-close-line1,
+.our-services__popup-close-btn .our-services__popup-close-line2{
+  transition: background-color .3s ease-in-out;
+}
+
+.our-services__popup-close-btn:hover .our-services__popup-close-line1,
+.our-services__popup-close-btn:hover .our-services__popup-close-line2{
+  background-color: #29B5E8;
+}
+
 
 /* === HEADER === */
 
@@ -340,14 +424,25 @@
 
 .competencies-links__link .competencies-links__arrow {
   opacity: 0;
-  transform: translateX(-7px) translateY(7px);
+  transform: translateX(-5px) translateY(5px);
   transition: opacity 0.35s ease-in-out, transform 0.35s ease-in-out;
+}
+
+.competencies-links__link .competencies-links__arrow .arrow-path{
+  transform: skew(-20deg, -20deg);
+  transform-origin: 100% 0%;
+  transition: transform 0.35s ease-in-out;
 }
 
 .competencies-links__link:hover .competencies-links__arrow,
 .competencies-links__link:focus-visible .competencies-links__arrow {
   opacity: 1;
   transform: translateX(0px) translateY(0px);
+}
+
+.competencies-links__link:hover .competencies-links__arrow .arrow-path,
+.competencies-links__link:focus-visible .competencies-links__arrow .arrow-path{
+  transform: skew(0deg, 0deg);
 }
 
 .competencies-links__link .competencies-links__title {
@@ -434,8 +529,37 @@
   filter: brightness(0) invert(1);
 }
 
-/* === RICH TEXT RESET === */
+/* === News Section === */
+.news-and-insights-item__link .news-and-insights-item__gradient{
+  transition: opacity .35s ease-in-out;
+}
 
+.news-and-insights-item__link:hover .news-and-insights-item__gradient,
+.news-and-insights-item__link:focus .news-and-insights-item__gradient{
+  opacity: 1;
+}
+
+.news-and-insights-item__link .news-and-insights-item__date,
+.news-and-insights-item__link .news-and-insights-item__title,
+.news-and-insights-item__link .news-and-insights-item__text,
+.news-and-insights-item__link .news-and-insights-item__link-title {
+  transition: color .35s ease-in-out;
+}
+
+
+.news-and-insights-item__link:hover .news-and-insights-item__date,
+.news-and-insights-item__link:focus .news-and-insights-item__date,
+.news-and-insights-item__link:hover .news-and-insights-item__title,
+.news-and-insights-item__link:focus .news-and-insights-item__title,
+.news-and-insights-item__link:hover .news-and-insights-item__text,
+.news-and-insights-item__link:focus .news-and-insights-item__text,
+.news-and-insights-item__link:hover .news-and-insights-item__link-title,
+.news-and-insights-item__link:focus .news-and-insights-item__link-title {
+  color: #FFFFFF;
+}
+
+/* === RICH TEXT RESET === */
+/*
 .rich-text-reset {
   font-size: 100%;
   font-family: inherit;
@@ -448,9 +572,9 @@
 }
 
 .rich-text-reset * {
-  all: unset; /* Resets all properties */
-  display: revert; /* Reverts the display property to its default value */
-  box-sizing: border-box; /* Ensures that padding and border are included in the element's total width and height */
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -513,3 +637,4 @@
   background: none;
   box-sizing: inherit;
 }
+*/
