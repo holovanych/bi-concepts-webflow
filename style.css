@@ -52,6 +52,10 @@
   margin-bottom: 0;
 }
 
+.data-scheme__collapse-box .data-scheme__collapse-hidden{
+  display: none;
+}
+
 /* === SECTION INDICATOR === */
 
 .page-section-indicator {
@@ -66,22 +70,24 @@
   transition: visibility 0.35s ease-in-out, opacity 0.35s ease-in-out;
 }
 
+/*
 .page-section-indicator .indicator-item:hover .indicator-item_text-wrap,
 .page-section-indicator
   .indicator-item:focus-visible
-  .indicator-item_text-wrap {
+  .indicator-item_text-wrap,*/
+.page-section-indicator .indicator-item.custom-current .indicator-item_text-wrap {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.35s ease-in-out 0s;
 }
 
 .page-section-indicator .indicator-item_text {
+  transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
 }
 
-.page-section-indicator .indicator-item.w--current {
-}
-
-.page-section-indicator .indicator-item__dot-wrap {
+.page-section-indicator .indicator-item.custom-current .indicator-item_text{
+  background-color: #0095F2;
+  color:#FFFFFF;
 }
 
 .page-section-indicator .indicator-item__dot {
@@ -93,8 +99,9 @@
   background-color: #0095f2;
 }
 
-.page-section-indicator .indicator-item.w--current .indicator-item__dot {
-  height: 14px;
+.page-section-indicator .indicator-item.custom-current .indicator-item__dot {
+  height: 20px;
+  background-color: #0095f2;
 }
 
 /* === TEAM GRID === */
@@ -181,12 +188,14 @@
 .scheme-with-nav__item{
   width: 28%;
   flex-shrink: 0;
+  flex-grow: 0;
   -webkit-backface-visibility: hidden;
   -webkit-transform: perspective(1000px);
 }
 
 .scheme-with-nav__item.active{
   flex-shrink: 0;
+  flex-grow: 0;
   width: 44%;
 }
 
@@ -199,6 +208,15 @@
 .scheme-with-nav__item.active .scheme-with-nav__text-wrapper{
   opacity: 1;
   transition: opacity .25s ease .3s;
+}
+
+
+.scheme-with-nav__item .scheme-with-nav__text-wrapper .scheme-with-nav__text{
+  font-size: 0em;
+}
+
+.scheme-with-nav__item.active .scheme-with-nav__text-wrapper .scheme-with-nav__text{
+  font-size: 1em;
 }
 
 .scheme-with-nav {
@@ -558,83 +576,56 @@
   color: #FFFFFF;
 }
 
-/* === RICH TEXT RESET === */
-/*
-.rich-text-reset {
-  font-size: 100%;
-  font-family: inherit;
-  font-weight: normal;
-  line-height: normal;
-  color: inherit;
-  background: none;
-  border: none;
-  box-sizing: border-box;
-}
-
-.rich-text-reset * {
-  all: unset;
-  display: revert;
-  box-sizing: border-box;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: inherit;
-  color: inherit;
+/* === Contact Form === */
+.w-checkbox-input {
+  opacity: 0;
+  width: 1px;
+  height: 1px;
   margin: 0;
-  padding: 0;
-  border: 0;
-  outline: 0;
-  background: none;
-  text-decoration: none;
-  text-align: inherit;
-  vertical-align: baseline;
-  white-space: inherit;
-  list-style: none;
-  border-collapse: collapse;
-  border-spacing: 0;
-  max-width: 100%;
-  height: auto;
+  margin-right: -10px;
 }
 
-.rich-text-reset a {
-  color: inherit;
-  text-decoration: none;
+.contact-us-checkbox-terms{
+  margin-left: 10px;
 }
 
-.rich-text-reset img {
-  display: block;
-  max-width: 100%;
-  height: auto;
+.contact-us-checkbox-label {
+  display: inline-block;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
 }
 
-.rich-text-reset ul,
-.rich-text-reset ol {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.contact-us-checkbox-label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  border: 1px solid #4A148C;
+  border-radius: 50%;
 }
 
-.rich-text-reset table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
+.contact-us-checkbox-label::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #4A148C;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.rich-text-reset th,
-.rich-text-reset td {
-  padding: 0;
-  border: none;
+.w-checkbox-input:checked + .contact-us-checkbox-label::after {
+  opacity: 1;
 }
 
-.rich-text-reset input,
-.rich-text-reset button,
-.rich-text-reset select,
-.rich-text-reset textarea {
-  font: inherit;
-  margin: 0;
-  padding: 0;
-  border: none;
-  background: none;
-  box-sizing: inherit;
+.w-checkbox{
+  padding-left: 0;
 }
-*/
