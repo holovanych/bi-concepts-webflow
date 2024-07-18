@@ -1,3 +1,39 @@
+/* === Animations === */
+
+let typeSplit = new SplitType("[text-split]", {
+  types: "words, chars",
+  tagName: "span"
+});
+
+function createScrollTrigger(triggerElement, timeline) {
+  ScrollTrigger.create({
+    trigger: triggerElement,
+    start: "top bottom",
+  });
+  ScrollTrigger.create({
+    trigger: triggerElement,
+    start: "top 80%",
+    onEnter: () => timeline.play()
+  });
+}
+
+[...document.querySelectorAll("[slide-up]")].forEach(function (element, index) {
+  gsap.set(element, { opacity: 0, y: "30px" });
+});
+
+[...document.querySelectorAll("[slide-up]")].forEach(function (element, index) {
+  let tl = gsap.timeline({ paused: true });
+  tl.to(element, { opacity: 1, y: "0", duration: 1.0, ease: "power2.out", stagger: { amount: 0.2 } });
+  createScrollTrigger(element, tl);
+});
+
+[...document.querySelectorAll("[words-slide-from-right]")].forEach(function (element, index) {
+  let tl = gsap.timeline({ paused: true });
+  tl.fromTo(element.querySelectorAll(".word"),{ opacity: 0, x: "-40px" }, { opacity: 1, x: "0", duration: 1.0, ease: "power2.out", stagger: { amount: 0.2 } });
+  createScrollTrigger(element, tl);
+});
+
+
 /* === Header Events === */
 
 const desktopHeader = document.querySelector(".main-header");
@@ -6,7 +42,7 @@ let lastScrollTop = 0;
 
 function setScrollClassToMenu() {
   const st = document.documentElement.scrollTop;
-  if (st > 200) {
+  if (st > 5) {
     desktopHeaderInner.classList.add("header-scrolled");
   } else {
     desktopHeaderInner.classList.remove("header-scrolled");
@@ -69,7 +105,6 @@ if (pageSectionIndicatorBox) {
 
           link.classList.add("custom-current");
           notEmpty = true;
-          console.log(scrollPosition, section.offsetTop);
         }
       }
     });
@@ -120,16 +155,13 @@ const testimonialSlider = document.querySelector(".swiper.testimonials-slider");
 if (testimonialSlider) {
   const testimonialSwiper = new Swiper(testimonialSlider, {
     loop: true,
-    /*autoplay: {
-      delay: 5000,
-    },*/
     breakpoints: {
       320: {
-        slidesPerView: 3,
+        slidesPerView: 1,
         spaceBetween: 10,
       },
       768: {
-        slidesPerView: 3,
+        slidesPerView: 2,
         spaceBetween: 10,
       },
       980: {
@@ -149,6 +181,8 @@ if (testimonialSlider) {
     },
   });
 }
+
+/* === Team Grid === */
 
 /* === Horizontal Scheme with Navigation === */
 
@@ -170,16 +204,8 @@ if (horizontalScheme) {
 
   const setActiveItem = (index) => {
     schemeWithNavItems[currentIndex].classList.remove("active");
-    /*const currentHidden = schemeWithNavItems[currentIndex].querySelector('.scheme-with-nav__hidden-part');
-    slideUp(currentHidden, 250, function(){
-      currentHidden.style = '';
-    })*/
     currentIndex = index;
     schemeWithNavItems[currentIndex].classList.add("active");
-    /*const nextHidden = schemeWithNavItems[currentIndex].querySelector('.scheme-with-nav__hidden-part');
-    slideDown(nextHidden, 250, function(){
-      nextHidden.style = '';
-    })*/
   };
 
   schemeWithNavRight.addEventListener("click", () => {
@@ -248,11 +274,10 @@ if (ourServices) {
     const itemWidth = ourServicesItems[0].clientWidth;
     const numberOfColumns = Math.floor(containerWidth / itemWidth);
     const rowIndex = Math.floor(index / numberOfColumns) + 1;
-    const insertAfterIndex = rowIndex * numberOfColumns - 1;
-    console.log("Clicked item index:", index);
-    console.log("Number of columns:", numberOfColumns);
-    console.log("Row index:", rowIndex);
-    console.log("After Index:", insertAfterIndex);
+    let insertAfterIndex = rowIndex * numberOfColumns - 1;
+    if(insertAfterIndex >= ourServicesItems.length){
+      insertAfterIndex = ourServicesItems.length - 1;
+    }
 
     const clonedPopup = popupList[index].cloneNode(true);
     insertAfter(ourServicesItems[insertAfterIndex], clonedPopup);
@@ -265,7 +290,6 @@ if (ourServices) {
     const activePopup = ourServicesItemsContainer.querySelector(
       ".our-services__popup-item"
     );
-    console.log(activePopup);
     if (activePopup) {
       slideUp(activePopup, 300, function () {
         activePopup.remove();
@@ -374,7 +398,6 @@ if (credentialsSection) {
       if (clickedCategory === "All") return true;
       return category.includes(clickedCategory);
     });
-    console.log(filteredItems);
     allCredentialItems.forEach((item) => item.classList.add("hidden-item"));
     filteredItems.forEach((item) => item.classList.remove("hidden-item"));
   }
@@ -464,139 +487,7 @@ if (backToTopButton) {
 }
 
 /* === COMMON JS FUNCTIONS === */
-
-// This function removes all HTML tags from the input string except <br> tags.
-function removeTagsExceptBr(htmlString) {
-  var tempDiv = document.createElement("div");
-  tempDiv.innerHTML = htmlString;
-
-  function processNode(node) {
-    if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName.toLowerCase() === "br") {
-        return node.outerHTML;
-      } else {
-        var result = "";
-        var children = Array.prototype.slice.call(node.childNodes);
-        for (var i = 0; i < children.length; i++) {
-          result += processNode(children[i]);
-        }
-        return result;
-      }
-    } else if (node.nodeType === Node.TEXT_NODE) {
-      return node.nodeValue;
-    } else {
-      return "";
-    }
-  }
-
-  var result = "";
-  var children = Array.prototype.slice.call(tempDiv.childNodes);
-  for (var i = 0; i < children.length; i++) {
-    result += processNode(children[i]);
-  }
-
-  result = result.replace(/&[a-zA-Z0-9#]+;/g, "");
-  return result;
-}
-
-function changeTag(oldElement, newTagName) {
-  // Create the new element with the desired tag name
-  const newElement = document.createElement(newTagName);
-
-  // Copy attributes from the old element to the new one
-  for (let attr of oldElement.attributes) {
-    newElement.setAttribute(attr.name, attr.value);
-  }
-
-  // Copy children from the old element to the new one
-  while (oldElement.firstChild) {
-    newElement.appendChild(oldElement.firstChild);
-  }
-
-  // Replace the old element with the new one in the DOM
-  oldElement.parentNode.replaceChild(newElement, oldElement);
-}
-
-function slideUp(element, duration = 400, callback) {
-  if (element.dataset.sliding === "true") return;
-
-  element.dataset.sliding = "true";
-  element.style.height = element.offsetHeight + "px";
-  element.style.transitionProperty = "height, margin, padding";
-  element.style.transitionDuration = duration + "ms";
-  element.style.boxSizing = "border-box";
-  element.offsetHeight; // force reflow
-  element.style.overflow = "hidden";
-  element.style.height = 0;
-  element.style.paddingTop = 0;
-  element.style.paddingBottom = 0;
-  element.style.marginTop = 0;
-  element.style.marginBottom = 0;
-
-  window.setTimeout(function () {
-    element.style.display = "none";
-    element.style.removeProperty("height");
-    element.style.removeProperty("padding-top");
-    element.style.removeProperty("padding-bottom");
-    element.style.removeProperty("margin-top");
-    element.style.removeProperty("margin-bottom");
-    element.style.removeProperty("overflow");
-    element.style.removeProperty("transition-duration");
-    element.style.removeProperty("transition-property");
-    element.dataset.sliding = "false";
-    if (typeof callback === "function") callback();
-  }, duration);
-}
-
-function slideDown(element, duration = 400, callback) {
-  if (element.dataset.sliding === "true") return;
-
-  element.dataset.sliding = "true";
-  element.style.removeProperty("display");
-  let display = window.getComputedStyle(element).display;
-
-  if (display === "none") display = "block";
-
-  element.style.display = display;
-  let height = element.offsetHeight;
-  element.style.overflow = "hidden";
-  element.style.height = 0;
-  element.style.paddingTop = 0;
-  element.style.paddingBottom = 0;
-  element.style.marginTop = 0;
-  element.style.marginBottom = 0;
-  element.offsetHeight; // force reflow
-  element.style.transitionProperty = "height, margin, padding";
-  element.style.transitionDuration = duration + "ms";
-  element.style.boxSizing = "border-box";
-  element.style.height = height + "px";
-  element.style.removeProperty("padding-top");
-  element.style.removeProperty("padding-bottom");
-  element.style.removeProperty("margin-top");
-  element.style.removeProperty("margin-bottom");
-
-  window.setTimeout(function () {
-    element.style.removeProperty("height");
-    element.style.removeProperty("overflow");
-    element.style.removeProperty("transition-duration");
-    element.style.removeProperty("transition-property");
-    element.dataset.sliding = "false";
-    if (typeof callback === "function") callback();
-  }, duration);
-}
-
-function setEqualHeight(selector) {
-  const elements = document.querySelectorAll(selector);
-  let maxHeight = 0;
-  elements.forEach((element) => {
-    element.style.height = "auto";
-  });
-
-  elements.forEach((element) => {
-    maxHeight = Math.max(maxHeight, element.offsetHeight);
-  });
-
-  elements.forEach((element) => {
-    element.style.height = `${maxHeight}px`;
-  });
-}
+function removeTagsExceptBr(e){var t=document.createElement("div");function o(e){if(e.nodeType===Node.ELEMENT_NODE){if("br"===e.tagName.toLowerCase())return e.outerHTML;for(var t="",r=Array.prototype.slice.call(e.childNodes),i=0;i<r.length;i++)t+=o(r[i]);return t}return e.nodeType===Node.TEXT_NODE?e.nodeValue:""}t.innerHTML=e;for(var r="",i=Array.prototype.slice.call(t.childNodes),n=0;n<i.length;n++)r+=o(i[n]);return r.replace(/&[a-zA-Z0-9#]+;/g,"")}
+function changeTag(e,t){let o=document.createElement(t);for(let r of e.attributes)o.setAttribute(r.name,r.value);for(;e.firstChild;)o.appendChild(e.firstChild);e.parentNode.replaceChild(o,e)}
+function slideUp(e,t=400,o){"true"!==e.dataset.sliding&&(e.dataset.sliding="true",e.style.height=e.offsetHeight+"px",e.style.transitionProperty="height, margin, padding",e.style.transitionDuration=t+"ms",e.style.boxSizing="border-box",e.offsetHeight,e.style.overflow="hidden",e.style.height=0,e.style.paddingTop=0,e.style.paddingBottom=0,e.style.marginTop=0,e.style.marginBottom=0,window.setTimeout(function(){e.style.display="none",e.style.removeProperty("height"),e.style.removeProperty("padding-top"),e.style.removeProperty("padding-bottom"),e.style.removeProperty("margin-top"),e.style.removeProperty("margin-bottom"),e.style.removeProperty("overflow"),e.style.removeProperty("transition-duration"),e.style.removeProperty("transition-property"),e.dataset.sliding="false","function"==typeof o&&o()},t))}
+function slideDown(e,t=400,o){if("true"===e.dataset.sliding)return;e.dataset.sliding="true",e.style.removeProperty("display");let r=window.getComputedStyle(e).display;"none"===r&&(r="block"),e.style.display=r;let i=e.offsetHeight;e.style.overflow="hidden",e.style.height=0,e.style.paddingTop=0,e.style.paddingBottom=0,e.style.marginTop=0,e.style.marginBottom=0,e.offsetHeight,e.style.transitionProperty="height, margin, padding",e.style.transitionDuration=t+"ms",e.style.boxSizing="border-box",e.style.height=i+"px",e.style.removeProperty("padding-top"),e.style.removeProperty("padding-bottom"),e.style.removeProperty("margin-top"),e.style.removeProperty("margin-bottom"),window.setTimeout(function(){e.style.removeProperty("height"),e.style.removeProperty("overflow"),e.style.removeProperty("transition-duration"),e.style.removeProperty("transition-property"),e.dataset.sliding="false","function"==typeof o&&o()},t)}function setEqualHeight(e){let t=document.querySelectorAll(e),o=0;t.forEach(e=>{e.style.height="auto"}),t.forEach(e=>{o=Math.max(o,e.offsetHeight)}),t.forEach(e=>{e.style.height=`${o}px`})}
