@@ -63,7 +63,7 @@
 }
 
 .page-section-indicator
-  .indicator-item.custom-current
+  .indicator-item.w--current
   .indicator-item_text-wrap {
   opacity: 1;
   visibility: visible;
@@ -74,7 +74,7 @@
   transition: background-color 0.35s ease-in-out, color 0.35s ease-in-out;
 }
 
-.page-section-indicator .indicator-item.custom-current .indicator-item_text {
+.page-section-indicator .indicator-item.w--current .indicator-item_text {
   background-color: #0095f2;
   color: #ffffff;
 }
@@ -88,9 +88,15 @@
   background-color: #0095f2;
 }
 
-.page-section-indicator .indicator-item.custom-current .indicator-item__dot {
+.page-section-indicator .indicator-item.w--current .indicator-item__dot {
   height: 20px;
   background-color: #0095f2;
+}
+
+.page-section-indicator__inner.active   .indicator-item .indicator-item_text-wrap {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease-in-out 0s;
 }
 
 /* === TEAM GRID === */
@@ -134,6 +140,16 @@
   left: 0;
   background-color: #000000;
 }
+
+@media(min-width: 1920px){
+  .bio-grid-item__text li:before{
+    top: 0.6em;
+    width: 4px;
+    height: 4px;
+  }
+}
+
+
 
 /* === QUOTE STYLE 1 === */
 
@@ -338,12 +354,16 @@
     background-color: #050a32;
   }
 
-  .main-header-inner.header-scrolled .rl_navbar1_dropdown-link {
-    color: #ffffff;
+  .main-header-inner.header-scrolled .rl_navbar1_dropdown-link{
+    color: #FFFFFF;
+  }
+
+  .main-header-inner.header-scrolled .rl_navbar1_dropdown-link.w--current {
+    color: #7bdaff;
   }
 
   .main-header-inner.header-scrolled .rl_navbar1_dropdown-link:hover {
-    color: #7bdaff;
+    color: #25bbf7;
   }
 
   .main-header-inner.header-scrolled
@@ -524,6 +544,31 @@
     transform: skew(0deg, 0deg);
   }
 }
+
+/* === Value Proposition Tabs === */
+
+.value-proposition-tab-body {
+  user-select: none;
+  position: relative;
+}
+
+.value-proposition-tab-body .value-proposition-tab-item{
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s, transform 0.5s;
+  position: absolute; /* Додано для уникнення зсуву елементів */
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.value-proposition-tab-body .value-proposition-tab-item.active{
+  opacity: 1;
+  transform: scale(1);
+  position: relative; /* Повернення в початкове положення */
+}
+
+
 
 /* === CREDENTIALS SECTION === */
 
