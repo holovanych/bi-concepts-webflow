@@ -1,5 +1,4 @@
-/* === Animations === */
-
+/*Animations*/
 let typeSplit = new SplitType("[text-split]", {
   types: "words, chars",
   tagName: "span",
@@ -52,8 +51,7 @@ function createScrollTrigger(triggerElement, timeline) {
   createScrollTrigger(element, tl);
 });
 
-/* === Header Events === */
-
+/* Header Events */
 const desktopHeader = document.querySelector(".main-header");
 const desktopHeaderInner = document.querySelector(".main-header-inner");
 let lastScrollTop = 0;
@@ -72,7 +70,6 @@ function setScrollClassToMenu() {
   }
   lastScrollTop = st <= 0 ? 0 : st;
 }
-
 window.addEventListener("scroll", () => {
   setScrollClassToMenu();
 });
@@ -92,14 +89,13 @@ if (dropdownMenuActiveLinks) {
   });
 }
 
-/* === Section Indicators Custom Class === */
+/*Section Indicators Custom Class */
 
 const dotsParentElement = document.querySelector(
   ".page-section-indicator__inner"
 );
 
 if (dotsParentElement) {
-
   dotsParentElement.addEventListener("mouseover", function () {
     dotsParentElement.classList.add("active");
   });
@@ -109,7 +105,7 @@ if (dotsParentElement) {
   });
 }
 
-/* === Home Page - Competencies Section === */
+/*Home Page - Competencies Section*/
 
 const competenciesLinks = document.querySelectorAll(
   ".competencies-links__link"
@@ -137,35 +133,69 @@ if (competenciesLinks) {
   });
 }
 
-/* === Value Proposition Tabs Slider === */
+/*Value Slider*/
 const valuePropositionTabsSection = document.querySelector(
   ".value-proposition-tabs-section"
 );
 if (valuePropositionTabsSection) {
   const items = document.querySelectorAll(".value-proposition-tab-item");
+  const tabTitleItems = document.querySelectorAll(
+    ".value-proposition-tab__tab-title-item"
+  );
   const leftButton = document.querySelector(".navigation-arrow-left");
   const rightButton = document.querySelector(".navigation-arrow-right");
+  const autoSlideDelay = 5000;
+  const userInterferenceTimeoutDelay = 1000 * 60 * 3;
+
   let currentIndex = 0;
+  let autoSlideInterval;
+  let userInterferenceTimeout;
 
   function updateActiveItem(index) {
     items.forEach((item, idx) => {
-      if (idx === index) {
-        item.classList.add("active");
-      } else {
-        item.classList.remove("active");
-      }
+      item.classList.toggle("active", idx === index);
     });
+
+    tabTitleItems.forEach((tab, idx) => {
+      tab.classList.toggle("active-tab", idx === index);
+    });
+  }
+
+  function setUserInterferenceTimeout() {
+    clearTimeout(userInterferenceTimeout);
+    clearInterval(autoSlideInterval);
+    userInterferenceTimeout = setTimeout(() => {
+      startAutoSlide();
+    }, userInterferenceTimeoutDelay);
+  }
+
+  function startAutoSlide() {
+    autoSlideInterval = setInterval(() => {
+      currentIndex = (currentIndex + 1) % items.length;
+      updateActiveItem(currentIndex);
+    }, autoSlideDelay);
   }
 
   leftButton.addEventListener("click", function () {
     currentIndex = currentIndex === 0 ? items.length - 1 : currentIndex - 1;
     updateActiveItem(currentIndex);
+    setUserInterferenceTimeout();
   });
 
   rightButton.addEventListener("click", function () {
-    currentIndex = currentIndex === items.length - 1 ? 0 : currentIndex + 1;
+    currentIndex = (currentIndex + 1) % items.length;
     updateActiveItem(currentIndex);
+    setUserInterferenceTimeout();
   });
+
+  tabTitleItems.forEach((tab, idx) => {
+    tab.addEventListener("click", function () {
+      currentIndex = idx;
+      updateActiveItem(currentIndex);
+      setUserInterferenceTimeout();
+    });
+  });
+  startAutoSlide();
 }
 
 /* === Testimonials Slider === */
@@ -380,12 +410,9 @@ if (quoteBoxStyle1) {
     const spanQuoteIcon = document.createElement("span");
     spanQuoteIcon.className = "inner-quote-icon";
     spanQuoteIcon.innerHTML = `<svg width="100%" height="100%" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                               <path d="M2.1799 17.23L0.709902 15.69C1.45657 14.3833 2.1099 13.1 2.6699 11.84C3.2299 10.5333 3.53324 
-                               9.27333 3.5799 8.06L0.149902 7.29V0.5H7.7099V5.4C7.7099 8.24667 7.12657 10.58 5.9599 12.4C4.8399 
-                               14.22 3.5799 15.83 2.1799 17.23ZM12.6799 17.23L11.2099 15.69C11.9566 14.3833 12.6099 13.1 13.1699 
-                               11.84C13.7299 10.5333 14.0332 9.27333 14.0799 8.06L10.6499 7.29V0.5H18.2099V5.4C18.2099 8.24667 
-                               17.6266 10.58 16.4599 12.4C15.3399 14.22 14.0799 15.83 12.6799 17.23Z" fill="#050A32"/>
-                              </svg>`;
+    <path d="M2.18 17.23L0.71 15.69c0.75-1.31 1.4-2.59 1.96-3.85 0.56-1.31 0.86-2.57 0.89-3.78L0.15 7.29V0.5h7.56V5.4c0 2.85-0.58 
+    5.18-1.75 7-1.12 1.82-2.38 3.43-3.78 4.83zM12.68 17.23l-1.47-1.54c0.75-1.31 1.4-2.59 
+    1.96-3.85 0.56-1.31 0.86-2.57 0.89-3.78L10.65 7.29V0.5h7.56V5.4c0 2.85-0.58 5.18-1.75 7-1.12 1.82-2.38 3.43-3.78 4.83z" fill="#050A32"/></svg>`;
     const wrapSpanQuoteElement = document.createElement("span");
     wrapSpanQuoteElement.className = "inner-quote-icon-wrap";
     wrapSpanQuoteElement.appendChild(spanQuoteIcon);
@@ -416,11 +443,10 @@ collapseButtons.forEach((button) => {
   });
 });
 
-/* CREDENTIALS Section */
+/* CREDENTIALS */
 
 const credentialsSection = document.querySelector(".credentials");
 if (credentialsSection) {
-  // Filter Items
   const credentialsCategories = [
     ...document.querySelectorAll(".credentials__category-item"),
   ];
@@ -448,8 +474,6 @@ if (credentialsSection) {
   credentialsCategories.forEach((category) => {
     category.addEventListener("click", clickOnCredentialCategory);
   });
-
-  // Slide Down Item
   const allCredentialHeadings = [
     ...document.querySelectorAll(".credential-item__head"),
   ];
@@ -471,14 +495,12 @@ if (credentialsSection) {
       });
     }
   }
-
   allCredentialHeadings.forEach((heading) => {
     heading.addEventListener("click", clickOnCredentialHeading);
   });
 }
 
 /* Footer */
-
 const footerSubMenuActiveLinks = [
   ...document.querySelectorAll(
     ".footer__menu-child-wrapper .footer__child-link.w--current"
@@ -495,7 +517,6 @@ if (footerSubMenuActiveLinks) {
     }, 100);
   });
 }
-
 const backToTopButton = document.querySelector(".back-to-top__arrow-box");
 if (backToTopButton) {
   backToTopButton.addEventListener("click", () => {
@@ -530,7 +551,7 @@ if (backToTopButton) {
   });
 }
 
-/* === COMMON JS FUNCTIONS === */
+/* COMMON JS FUNCTIONS */
 function removeTagsExceptBr(e) {
   var t = document.createElement("div");
   function o(e) {

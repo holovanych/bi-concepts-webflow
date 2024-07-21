@@ -439,14 +439,6 @@
   .rl-dropdown-icon {
     display: none;
   }
-
-  /*  .rl_navbar1_dropdown-toggle{
-    pointer-events: none;
-  }
-
-  .rl_navbar1_dropdown-toggle .rl_navbar1_link-text{
-    pointer-events: all;
-  }*/
 }
 
 /* === HOME CORE COMPETENCIES SECTION === */
@@ -548,27 +540,69 @@
 /* === Value Proposition Tabs === */
 
 .value-proposition-tab-body {
-  user-select: none;
   position: relative;
 }
 
-.value-proposition-tab-body .value-proposition-tab-item{
-  opacity: 0;
-  transform: scale(0.95);
-  transition: opacity 0.5s, transform 0.5s;
-  position: absolute; /* Додано для уникнення зсуву елементів */
+.value-proposition-tab-item{
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
 
-.value-proposition-tab-body .value-proposition-tab-item.active{
-  opacity: 1;
-  transform: scale(1);
-  position: relative; /* Повернення в початкове положення */
+.value-proposition-tab-item.active{
+  position: relative;
+  z-index: 10;
+}
+
+.value-proposition-tab-item .value-proposition-tab__item-heading{
+  user-select: none;
+}
+
+.value-proposition-tab-item .value-proposition-tab__item-heading,
+.value-proposition-tab-item .value-proposition-tab__item-subtitle,
+.value-proposition-tab-item .value-proposition-tab__item-info,
+.value-proposition-tab-item .table-scheme {
+  opacity: 0;
+  transition: opacity .35s ease-in-out;
 }
 
 
+.value-proposition-tab-item.active .value-proposition-tab__item-heading{
+  opacity: 1;
+  transition: opacity .6s ease-in-out .2s;
+}
+
+.value-proposition-tab-item.active .value-proposition-tab__item-subtitle{
+  opacity: 1;
+  transition: opacity .6s ease-in-out .4s;
+}
+
+.value-proposition-tab-item.active .value-proposition-tab__item-info{
+  opacity: 1;
+  transition: opacity .6s ease-in-out .4s;
+}
+
+.value-proposition-tab-item.active .table-scheme{
+  opacity: 1;
+  transition: opacity .6s ease-in-out .55s;
+}
+
+.value-proposition-tab__tab-title-item{
+  transition: background-color 0.35s ease-in-out;
+}
+
+.value-proposition-tab__tab-title-item .value-proposition-tab__tab-title-text{
+  transition: color 0.35s ease-in-out;
+}
+
+.value-proposition-tab__tab-title-item.active-tab {
+  background-color: #050a32;
+}
+
+.value-proposition-tab__tab-title-item.active-tab .value-proposition-tab__tab-title-text{
+  color: #ffffff;
+}
 
 /* === CREDENTIALS SECTION === */
 
