@@ -1,6 +1,6 @@
 /*Animations*/
 let typeSplit = new SplitType("[text-split]", {
-  types: "words, chars",
+  types: "words",
   tagName: "span",
 });
 
@@ -36,9 +36,16 @@ function createScrollTrigger(triggerElement, timeline) {
   element,
   index
 ) {
-  let tl = gsap.timeline({ paused: true });
+
+  const word = element.querySelectorAll(".word");
+  let tl = gsap.timeline({ 
+    paused: true ,
+    onComplete: function(){
+      SplitType.revert(element);
+    },
+  });
   tl.fromTo(
-    element.querySelectorAll(".word"),
+    word,
     { opacity: 0, x: "-40px" },
     {
       opacity: 1,
